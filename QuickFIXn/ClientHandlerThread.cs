@@ -132,7 +132,15 @@ namespace QuickFix
 
         public bool Send(string data)
         {
-            return socketReader_.Send(data) > 0;
+			try
+			{
+				 return socketReader_.Send(data) > 0;
+			}
+			catch (System.Exception e)
+			{
+				Shutdown(e.Message);
+				return false;
+			}           
         }
 
         public void Disconnect()

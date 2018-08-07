@@ -24,8 +24,7 @@ namespace QuickFix
         public FileLog(string fileLogPath, SessionID sessionID)
         {
             Init(fileLogPath, Prefix(sessionID));
-        }   
-        
+        }        
 
         private void Init(string fileLogPath, string prefix)
         {
