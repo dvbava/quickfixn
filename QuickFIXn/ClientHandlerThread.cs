@@ -78,6 +78,10 @@ namespace QuickFix
         {
             Log("shutdown requested: " + reason);
             isShutdownRequested_ = true;
+
+            this.Log("shutdown");
+            if (Exited != null)
+                Exited(this, new ExitedEventArgs(this));
         }
 
         public void Join()
@@ -102,9 +106,6 @@ namespace QuickFix
                     Shutdown(e.Message);
                 }
             }
-
-            this.Log("shutdown");
-            OnExited();
         }
 
         protected void OnExited()
@@ -116,7 +117,8 @@ namespace QuickFix
         /// FIXME do real logging
         public void Log(string s)
         {
-            log_.OnEvent(s);
+            if(log_ != null)
+                log_.OnEvent(s);
         }
 
         /// <summary>
@@ -136,11 +138,11 @@ namespace QuickFix
 			{
 				 return socketReader_.Send(data) > 0;
 			}
-			catch (System.Exception e)
+			catch (System.IO.IOException io)
 			{
-				Shutdown(e.Message);
-				return false;
-			}           
+				Shutdown(io.Message);
+                throw;
+			}        
         }
 
         public void Disconnect()

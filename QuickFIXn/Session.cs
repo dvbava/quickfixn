@@ -1662,7 +1662,17 @@ namespace QuickFix
                 string messageString = message.ToString();
                 if (0 == seqNum)
                     Persist(message, messageString);
-                return Send(messageString);
+
+
+                try
+                {
+                    return Send(messageString);
+                }
+                catch (System.IO.IOException io)
+                {
+                    Disconnect("Socket closed: " + io.Message);
+                    return false;
+                }                
             }
         }
 
