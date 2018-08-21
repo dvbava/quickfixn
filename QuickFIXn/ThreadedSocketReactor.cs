@@ -65,6 +65,7 @@ namespace QuickFix
                     try
                     {
                         state_ = State.SHUTDOWN_REQUESTED;
+                        tcpListener_.Server.Disconnect(false);
                         tcpListener_.Server.Close();
                         tcpListener_.Stop();
                     }

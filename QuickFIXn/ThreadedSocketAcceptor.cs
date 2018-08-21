@@ -190,8 +190,9 @@ namespace QuickFix
             {
                 foreach (AcceptorSocketDescriptor socketDescriptor in socketDescriptorForAddress_.Values)
                 {
+                    System.Console.WriteLine("Shutdown address: " + socketDescriptor.Address);
                     socketDescriptor.SocketReactor.Shutdown();
-                    // FIXME log_.Info("No longer accepting connections on " + socketDescriptor.getAddress());
+                    System.Console.WriteLine("No longer accepting connections on " + socketDescriptor.Address);
                 }
             }
         }
@@ -202,7 +203,9 @@ namespace QuickFix
             {
                 try
                 {
+                    System.Console.WriteLine("Try Logout from: " + session);
                     session.Logout();
+                    System.Console.WriteLine("Logged out from: " + session);
                 }
                 catch (System.Exception e)
                 {
