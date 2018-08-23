@@ -125,13 +125,17 @@ namespace QuickFix
             if (dict.Has(SessionSettings.SOCKET_ACCEPT_HOST))
             {
                 string host = dict.GetString(SessionSettings.SOCKET_ACCEPT_HOST);                
-                IPAddress[] addrs = Dns.GetHostAddresses(host);
-                socketEndPoint = new IPEndPoint(addrs[0], port);
+                IPAddress addr = IPAddress.Parse(host);
+
+                Console.WriteLine("Listining on IPAddress: " + addr);
+
+                socketEndPoint = new IPEndPoint(addr, port);
                 // Set hostname (if it is not already configured)
                 socketSettings.ServerCommonName = socketSettings.ServerCommonName ?? host;
             }
             else
             {
+                Console.WriteLine("Listining on IPAddress: Any");
                 socketEndPoint = new IPEndPoint(IPAddress.Any, port);
             }
 
